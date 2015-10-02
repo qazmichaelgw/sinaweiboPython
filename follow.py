@@ -54,7 +54,7 @@ def follow(oid,dstuid):
         print respon.status_code
         print respon.text
 
-follow(2636688737,1649166140)
+#follow(2636688737,1649166140)
 def unfollow(oid,dstuid):
         followedurl = "http://weibo.com/aj/f/unfollow?ajwvr=6&__rnd=%s"% int(time.time())
         data = {
@@ -81,3 +81,30 @@ def unfollow(oid,dstuid):
         print respon.text
 
 #unfollow(2636688737,1649166140)
+
+def add_new(uid, content):#create a new weibo发布新微博方法
+    addurl = "http://weibo.com/aj/mblog/add?_wv=5&__" + str(time.time())
+    data = {'text':content, 'rank':'0', 'location':'home', 'module':'stissue', '_t':'0'}
+    headers = {}
+    headers['Cookie'] = cookie
+    headers['Referer'] = 'http://weibo.com/u/' + str(uid) + '?topnav=1&wvr=5'
+    respon = session.post(addurl, data, headers=headers)
+    print respon.status_code
+add_new(2636688737, "添加新微博的方法")
+
+# mid:3599892905366755
+# d_expanded:off
+# expanded_status:
+# _t:0
+# __rnd:1373792334798
+# add_new()
+# mid=3600011008917103
+def forward(uid, mid, content):  # forward other's weibo 转发别人微博方法
+    forwardurl = "http://weibo.com/aj/mblog/forward?_wv=5&__" + str(time.time())
+    data = {'uid':mid, 'style-type':2, 'reason':content, 'rank':0, 'location':'mblog', '_t':0}
+    headers = {}
+    headers['set-cookie'] = resp.headers['set-cookie']
+    headers['Referer'] = 'http://weibo.com/u/'+ str(uid) + '?from=profile&wvr=5&loc=tabprofile'
+    respon = session.post(forwardurl, data, headers=headers)
+    print respon.status_code
+#forward(2636688737, 3600011008917103, "转发")
